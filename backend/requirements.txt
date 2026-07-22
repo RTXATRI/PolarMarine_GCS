@@ -1,0 +1,10 @@
+fastapi==0.139.0
+uvicorn[standard]==0.51.0
+pydantic==2.13.4
+pydantic-settings==2.14.2
+roslibpy==2.1.0
+websockets==16.1
+httpx==0.28.1
+pytest==8.3.4
+pyserial==3.5
+psutil==6.1.1

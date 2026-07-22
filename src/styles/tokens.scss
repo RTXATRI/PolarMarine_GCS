@@ -1,0 +1,58 @@
+/* 设计 token —— 通过 [data-theme] 切换 */
+
+:root {
+  /* 通用 */
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.18);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.24);
+
+  --color-online: #2ecc71;
+  --color-warn: #f59e0b;
+  --color-danger: #ef4444;
+  --color-offline: #9ca3af;
+  --color-accent: #3b82f6;
+  --color-info: #60a5fa;
+
+  /* 默认 = 深色 */
+  --bg-page: #0b1220;
+  --bg-app: #0f172a;
+  --bg-panel: #111d34;
+  --bg-panel-2: #16243f;
+  --bg-elevated: #1b2c4d;
+  --bg-hover: #1f3358;
+  --border: #1f2c45;
+  --border-strong: #2a3a5c;
+  --text-1: #e6edf6;
+  --text-2: #b6c2d2;
+  --text-3: #8392a8;
+  --text-muted: #5c6a82;
+  --grid-line: rgba(255, 255, 255, 0.06);
+  --grid-line-strong: rgba(255, 255, 255, 0.14);
+  --map-bg: #0a1729;
+  --map-grid: rgba(120, 160, 220, 0.12);
+  --map-grid-strong: rgba(120, 160, 220, 0.24);
+  --code-bg: #0a1426;
+}
+
+[data-theme='light'] {
+  --bg-page: #eef2f7;
+  --bg-app: #f4f6fa;
+  --bg-panel: #ffffff;
+  --bg-panel-2: #f7f9fc;
+  --bg-elevated: #ffffff;
+  --bg-hover: #eef3fb;
+  --border: #d8dfeb;
+  --border-strong: #c2ccdc;
+  --text-1: #1a2233;
+  --text-2: #41526a;
+  --text-3: #6a7a92;
+  --text-muted: #9aa6ba;
+  --grid-line: rgba(0, 0, 0, 0.05);
+  --grid-line-strong: rgba(0, 0, 0, 0.1);
+  --map-bg: #f6f8fc;
+  --map-grid: rgba(60, 90, 140, 0.12);
+  --map-grid-strong: rgba(60, 90, 140, 0.22);
+  --code-bg: #f0f3f8;
+}

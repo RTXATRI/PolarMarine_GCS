@@ -1,0 +1,100 @@
+/* 让 Element Plus 跟随我们的 design tokens */
+
+:root {
+  --el-color-primary: var(--color-accent);
+  --el-color-success: var(--color-online);
+  --el-color-warning: var(--color-warn);
+  --el-color-danger: var(--color-danger);
+  --el-color-info: var(--color-info);
+  --el-border-radius-base: var(--radius-md);
+  --el-font-family: 'Inter', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+}
+
+[data-theme='dark'] {
+  --el-bg-color: var(--bg-panel);
+  --el-bg-color-page: var(--bg-page);
+  --el-bg-color-overlay: var(--bg-panel);
+  --el-text-color-primary: var(--text-1);
+  --el-text-color-regular: var(--text-2);
+  --el-text-color-secondary: var(--text-3);
+  --el-text-color-placeholder: var(--text-muted);
+  --el-border-color: var(--border);
+  --el-border-color-light: var(--border);
+  --el-border-color-lighter: var(--border);
+  --el-fill-color-blank: var(--bg-panel);
+  --el-fill-color: var(--bg-panel-2);
+  --el-fill-color-light: var(--bg-panel-2);
+  --el-fill-color-lighter: var(--bg-panel);
+  --el-disabled-bg-color: var(--bg-panel-2);
+}
+
+[data-theme='light'] {
+  --el-bg-color: var(--bg-panel);
+  --el-bg-color-page: var(--bg-page);
+  --el-text-color-primary: var(--text-1);
+  --el-text-color-regular: var(--text-2);
+  --el-text-color-secondary: var(--text-3);
+  --el-border-color: var(--border);
+  --el-border-color-light: var(--border);
+  --el-border-color-lighter: var(--border);
+}
+
+/* 让常用组件吃我们的颜色 */
+.el-card {
+  background-color: var(--bg-panel);
+  border-color: var(--border);
+}
+
+.el-table {
+  background-color: var(--bg-panel) !important;
+  color: var(--text-1) !important;
+  --el-table-bg-color: var(--bg-panel);
+  --el-table-tr-bg-color: var(--bg-panel);
+  --el-table-header-bg-color: var(--bg-panel-2);
+  --el-table-row-hover-bg-color: var(--bg-hover);
+  --el-table-border-color: var(--border);
+  --el-table-header-text-color: var(--text-1);
+  --el-table-text-color: var(--text-2);
+}
+
+.el-menu {
+  background-color: transparent !important;
+  border-right: none !important;
+}
+
+.el-menu-item,
+.el-sub-menu__title {
+  color: var(--text-2) !important;
+}
+
+.el-menu-item.is-active {
+  color: var(--color-accent) !important;
+  background-color: var(--bg-hover) !important;
+}
+
+.el-menu-item:hover {
+  background-color: var(--bg-hover) !important;
+}
+
+.el-input__wrapper,
+.el-select__wrapper,
+.el-textarea__inner {
+  background-color: var(--bg-panel-2) !important;
+  box-shadow: 0 0 0 1px var(--border) inset !important;
+}
+
+[data-theme='dark'] .el-input__inner {
+  color: var(--text-1);
+}
+
+.el-popover,
+.el-popper {
+  background-color: var(--bg-panel) !important;
+  color: var(--text-1) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.el-message-box {
+  background-color: var(--bg-panel) !important;
+  border: 1px solid var(--border) !important;
+}
