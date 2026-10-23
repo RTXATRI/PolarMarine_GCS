@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polarmarine.local/schemas/v1/driver-plugin-manifest.schema.json",
+  "title": "PolarMarine driver plugin manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "displayName", "executable", "supports", "configuration"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "id": { "enum": ["ros1", "ros2", "serial_json", "simulator"] },
+    "displayName": { "type": "string", "minLength": 1 },
+    "executable": { "type": "string", "pattern": "^[A-Za-z0-9_.-]+\\.exe$" },
+    "supports": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["formalControl", "debugConsole", "identityDiscovery"],
+      "properties": {
+        "formalControl": { "type": "boolean" },
+        "debugConsole": { "type": "boolean" },
+        "identityDiscovery": { "type": "boolean" }
+      }
+    },
+    "configuration": { "type": "object" }
+  }
+}

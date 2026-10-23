@@ -1,0 +1,3858 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PolarMarine GCS",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_v1_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/bootstrap": {
+      "get": {
+        "tags": [
+          "system"
+        ],
+        "summary": "Bootstrap",
+        "operationId": "bootstrap_api_v1_bootstrap_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BootstrapDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/device-templates": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "List Templates",
+        "operationId": "list_templates_api_v1_device_templates_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceTemplateDto"
+                  },
+                  "type": "array",
+                  "title": "Response List Templates Api V1 Device Templates Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Create Template",
+        "operationId": "create_template_api_v1_device_templates_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceTemplateWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceTemplateDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/device-templates/{template_id}": {
+      "put": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Update Template",
+        "operationId": "update_template_api_v1_device_templates__template_id__put",
+        "parameters": [
+          {
+            "name": "template_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Template Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceTemplateWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceTemplateDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Delete Template",
+        "operationId": "delete_template_api_v1_device_templates__template_id__delete",
+        "parameters": [
+          {
+            "name": "template_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Template Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "List Devices",
+        "operationId": "list_devices_api_v1_devices_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/DeviceDto"
+                  },
+                  "type": "array",
+                  "title": "Response List Devices Api V1 Devices Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Create Device",
+        "operationId": "create_device_api_v1_devices_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}": {
+      "put": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Update Device",
+        "operationId": "update_device_api_v1_devices__device_id__put",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeviceWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Delete Device",
+        "operationId": "delete_device_api_v1_devices__device_id__delete",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}/links": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "List Links",
+        "operationId": "list_links_api_v1_devices__device_id__links_get",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LinkProfileDto"
+                  },
+                  "title": "Response List Links Api V1 Devices  Device Id  Links Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Create Link",
+        "operationId": "create_link_api_v1_devices__device_id__links_post",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkProfileWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LinkProfileDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}/links/{link_id}": {
+      "put": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Update Link",
+        "operationId": "update_link_api_v1_devices__device_id__links__link_id__put",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          },
+          {
+            "name": "link_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Link Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LinkProfileWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LinkProfileDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Delete Link",
+        "operationId": "delete_link_api_v1_devices__device_id__links__link_id__delete",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          },
+          {
+            "name": "link_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Link Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}/link-sessions": {
+      "get": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "List Link Sessions",
+        "operationId": "list_link_sessions_api_v1_devices__device_id__link_sessions_get",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LinkSessionDto"
+                  },
+                  "title": "Response List Link Sessions Api V1 Devices  Device Id  Link Sessions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}/links/{link_id}/connect": {
+      "post": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Connect Link",
+        "operationId": "connect_link_api_v1_devices__device_id__links__link_id__connect_post",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          },
+          {
+            "name": "link_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Link Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsyncOperationReceipt"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}/links/{link_id}/disconnect": {
+      "post": {
+        "tags": [
+          "catalogue"
+        ],
+        "summary": "Disconnect Link",
+        "operationId": "disconnect_link_api_v1_devices__device_id__links__link_id__disconnect_post",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          },
+          {
+            "name": "link_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Link Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AsyncOperationReceipt"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}/commands": {
+      "post": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Submit Command",
+        "operationId": "submit_command_api_v1_devices__device_id__commands_post",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CommandRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/commands": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "List Commands",
+        "operationId": "list_commands_api_v1_commands_get",
+        "parameters": [
+          {
+            "name": "deviceId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Deviceid"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 1,
+              "default": 100,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CommandDto"
+                  },
+                  "title": "Response List Commands Api V1 Commands Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/commands/{command_id}": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Get Command",
+        "operationId": "get_command_api_v1_commands__command_id__get",
+        "parameters": [
+          {
+            "name": "command_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Command Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/commands/{command_id}/cancel": {
+      "post": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Cancel Command",
+        "operationId": "cancel_command_api_v1_commands__command_id__cancel_post",
+        "parameters": [
+          {
+            "name": "command_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Command Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/telemetry/snapshots": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Telemetry Snapshots",
+        "operationId": "telemetry_snapshots_api_v1_telemetry_snapshots_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/TelemetrySnapshotDto"
+                  },
+                  "type": "array",
+                  "title": "Response Telemetry Snapshots Api V1 Telemetry Snapshots Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/events": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "List Events",
+        "operationId": "list_events_api_v1_events_get",
+        "parameters": [
+          {
+            "name": "after",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "After"
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Before"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Type"
+            }
+          },
+          {
+            "name": "aggregateId",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string",
+                  "maxLength": 128
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Aggregateid"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 1,
+              "default": 200,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PersistedEventDto"
+                  },
+                  "title": "Response List Events Api V1 Events Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alarms": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "List Alarms",
+        "operationId": "list_alarms_api_v1_alarms_get",
+        "parameters": [
+          {
+            "name": "activeOnly",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "title": "Activeonly"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 1000,
+              "minimum": 1,
+              "default": 200,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/AlarmDto"
+                  },
+                  "title": "Response List Alarms Api V1 Alarms Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/alarms/{alarm_id}/acknowledge": {
+      "post": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Acknowledge Alarm",
+        "operationId": "acknowledge_alarm_api_v1_alarms__alarm_id__acknowledge_post",
+        "parameters": [
+          {
+            "name": "alarm_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Alarm Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AlarmDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}/parameters": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Get Parameters",
+        "operationId": "get_parameters_api_v1_devices__device_id__parameters_get",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParameterStateDto"
+                  },
+                  "title": "Response Get Parameters Api V1 Devices  Device Id  Parameters Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Write Parameters",
+        "operationId": "write_parameters_api_v1_devices__device_id__parameters_put",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ParameterWriteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/devices/{device_id}/parameters/read": {
+      "post": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Refresh Parameters",
+        "operationId": "refresh_parameters_api_v1_devices__device_id__parameters_read_post",
+        "parameters": [
+          {
+            "name": "device_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Device Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommandDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/recordings": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "List Recordings",
+        "operationId": "list_recordings_api_v1_recordings_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/RecordingDto"
+                  },
+                  "type": "array",
+                  "title": "Response List Recordings Api V1 Recordings Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/recordings/{recording_id}/messages": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Recording Messages",
+        "operationId": "recording_messages_api_v1_recordings__recording_id__messages_get",
+        "parameters": [
+          {
+            "name": "recording_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Recording Id"
+            }
+          },
+          {
+            "name": "startTimeNs",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Starttimens"
+            }
+          },
+          {
+            "name": "endTimeNs",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Endtimens"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 10000,
+              "minimum": 1,
+              "default": 1000,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecordingMessageDto"
+                  },
+                  "title": "Response Recording Messages Api V1 Recordings  Recording Id  Messages Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/recordings/{recording_id}/download": {
+      "get": {
+        "tags": [
+          "runtime"
+        ],
+        "summary": "Download Recording",
+        "operationId": "download_recording_api_v1_recordings__recording_id__download_get",
+        "parameters": [
+          {
+            "name": "recording_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Recording Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/missions": {
+      "get": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "List Plans",
+        "operationId": "list_plans_api_v1_missions_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MissionPlanDto"
+                  },
+                  "type": "array",
+                  "title": "Response List Plans Api V1 Missions Get"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "Create Plan",
+        "operationId": "create_plan_api_v1_missions_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MissionPlanWrite"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissionPlanDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/missions/{plan_id}/versions": {
+      "get": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "List Plan Versions",
+        "operationId": "list_plan_versions_api_v1_missions__plan_id__versions_get",
+        "parameters": [
+          {
+            "name": "plan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Plan Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MissionPlanDto"
+                  },
+                  "title": "Response List Plan Versions Api V1 Missions  Plan Id  Versions Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/missions/{plan_id}": {
+      "put": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "Update Plan",
+        "operationId": "update_plan_api_v1_missions__plan_id__put",
+        "parameters": [
+          {
+            "name": "plan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Plan Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MissionPlanWrite"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissionPlanDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "Delete Plan",
+        "operationId": "delete_plan_api_v1_missions__plan_id__delete",
+        "parameters": [
+          {
+            "name": "plan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Plan Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mission-runs": {
+      "get": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "List Runs",
+        "operationId": "list_runs_api_v1_mission_runs_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/MissionRunDto"
+                  },
+                  "type": "array",
+                  "title": "Response List Runs Api V1 Mission Runs Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/missions/{plan_id}/runs": {
+      "post": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "Start Run",
+        "operationId": "start_run_api_v1_missions__plan_id__runs_post",
+        "parameters": [
+          {
+            "name": "plan_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Plan Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissionRunDto"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mission-runs/{run_id}/pause": {
+      "post": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "Pause Run",
+        "operationId": "pause_run_api_v1_mission_runs__run_id__pause_post",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissionControlReceipt"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mission-runs/{run_id}/resume": {
+      "post": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "Resume Run",
+        "operationId": "resume_run_api_v1_mission_runs__run_id__resume_post",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissionControlReceipt"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/mission-runs/{run_id}/cancel": {
+      "post": {
+        "tags": [
+          "missions"
+        ],
+        "summary": "Cancel Run",
+        "operationId": "cancel_run_api_v1_mission_runs__run_id__cancel_post",
+        "parameters": [
+          {
+            "name": "run_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Run Id"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MissionControlReceipt"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/discovery/network": {
+      "get": {
+        "tags": [
+          "debug"
+        ],
+        "summary": "Network Discovery",
+        "operationId": "network_discovery_api_v1_discovery_network_get",
+        "parameters": [
+          {
+            "name": "driver",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/DriverKind",
+              "default": "ros1"
+            }
+          },
+          {
+            "name": "timeoutSeconds",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "maximum": 3.0,
+              "minimum": 0.2,
+              "default": 1.5,
+              "title": "Timeoutseconds"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NetworkDiscoveryResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/debug/ros": {
+      "post": {
+        "tags": [
+          "debug"
+        ],
+        "summary": "Ros Debug",
+        "operationId": "ros_debug_api_v1_debug_ros_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RosDebugRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Ros Debug Api V1 Debug Ros Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/debug/serial/ports": {
+      "get": {
+        "tags": [
+          "debug"
+        ],
+        "summary": "Serial Ports",
+        "operationId": "serial_ports_api_v1_debug_serial_ports_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": true,
+                  "type": "object",
+                  "title": "Response Serial Ports Api V1 Debug Serial Ports Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/support-bundle": {
+      "get": {
+        "tags": [
+          "support"
+        ],
+        "summary": "Support Bundle",
+        "operationId": "support_bundle_api_v1_support_bundle_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AlarmDto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/AlarmSeverity"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "deviceId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deviceid"
+          },
+          "acknowledged": {
+            "type": "boolean",
+            "title": "Acknowledged"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "acknowledgedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Acknowledgedat"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "code",
+          "severity",
+          "message",
+          "deviceId",
+          "acknowledged",
+          "createdAt",
+          "acknowledgedAt",
+          "revision"
+        ],
+        "title": "AlarmDto"
+      },
+      "AlarmSeverity": {
+        "type": "string",
+        "enum": [
+          "info",
+          "warning",
+          "critical"
+        ],
+        "title": "AlarmSeverity"
+      },
+      "AsyncOperationReceipt": {
+        "properties": {
+          "operationId": {
+            "type": "string",
+            "title": "Operationid"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "accepted"
+          },
+          "session": {
+            "$ref": "#/components/schemas/LinkSessionDto"
+          }
+        },
+        "type": "object",
+        "required": [
+          "operationId",
+          "session"
+        ],
+        "title": "AsyncOperationReceipt"
+      },
+      "BootstrapDto": {
+        "properties": {
+          "serverInstanceId": {
+            "type": "string",
+            "title": "Serverinstanceid"
+          },
+          "eventCursor": {
+            "type": "integer",
+            "title": "Eventcursor"
+          },
+          "templates": {
+            "items": {
+              "$ref": "#/components/schemas/DeviceTemplateDto"
+            },
+            "type": "array",
+            "title": "Templates"
+          },
+          "devices": {
+            "items": {
+              "$ref": "#/components/schemas/DeviceDto"
+            },
+            "type": "array",
+            "title": "Devices"
+          },
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/LinkProfileDto"
+            },
+            "type": "array",
+            "title": "Links"
+          },
+          "linkSessions": {
+            "items": {
+              "$ref": "#/components/schemas/LinkSessionDto"
+            },
+            "type": "array",
+            "title": "Linksessions"
+          },
+          "operationalStates": {
+            "items": {
+              "$ref": "#/components/schemas/OperationalStateDto"
+            },
+            "type": "array",
+            "title": "Operationalstates"
+          },
+          "telemetrySnapshots": {
+            "items": {
+              "$ref": "#/components/schemas/TelemetrySnapshotDto"
+            },
+            "type": "array",
+            "title": "Telemetrysnapshots"
+          },
+          "activeAlarms": {
+            "items": {
+              "$ref": "#/components/schemas/AlarmDto"
+            },
+            "type": "array",
+            "title": "Activealarms"
+          },
+          "recentCommands": {
+            "items": {
+              "$ref": "#/components/schemas/CommandDto"
+            },
+            "type": "array",
+            "title": "Recentcommands"
+          },
+          "activeMissionRuns": {
+            "items": {
+              "$ref": "#/components/schemas/MissionRunDto"
+            },
+            "type": "array",
+            "title": "Activemissionruns"
+          },
+          "settings": {
+            "$ref": "#/components/schemas/BootstrapSettingsDto"
+          }
+        },
+        "type": "object",
+        "required": [
+          "serverInstanceId",
+          "eventCursor",
+          "templates",
+          "devices",
+          "links",
+          "linkSessions",
+          "operationalStates",
+          "telemetrySnapshots",
+          "activeAlarms",
+          "recentCommands",
+          "activeMissionRuns",
+          "settings"
+        ],
+        "title": "BootstrapDto"
+      },
+      "BootstrapSettingsDto": {
+        "properties": {
+          "baiduMapAk": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Baidumapak"
+          },
+          "offlineMapStyleUrl": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Offlinemapstyleurl"
+          },
+          "simulatorLabel": {
+            "type": "string",
+            "title": "Simulatorlabel",
+            "default": "仿真数据"
+          },
+          "maxConfiguredDevices": {
+            "type": "integer",
+            "title": "Maxconfigureddevices"
+          },
+          "maxOnlineDevices": {
+            "type": "integer",
+            "title": "Maxonlinedevices"
+          }
+        },
+        "type": "object",
+        "required": [
+          "baiduMapAk",
+          "offlineMapStyleUrl",
+          "maxConfiguredDevices",
+          "maxOnlineDevices"
+        ],
+        "title": "BootstrapSettingsDto"
+      },
+      "CommandDto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "deviceId": {
+            "type": "string",
+            "title": "Deviceid"
+          },
+          "commandType": {
+            "$ref": "#/components/schemas/CommandType"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          },
+          "status": {
+            "$ref": "#/components/schemas/CommandStatus"
+          },
+          "progress": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Progress"
+          },
+          "result": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Result"
+          },
+          "routedLinkIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Routedlinkids"
+          },
+          "linkAcknowledgements": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Linkacknowledgements"
+          },
+          "idempotencyKey": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idempotencykey"
+          },
+          "reasonCode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reasoncode"
+          },
+          "reasonMessage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Reasonmessage"
+          },
+          "requiresStateConfirmation": {
+            "type": "boolean",
+            "title": "Requiresstateconfirmation"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          },
+          "expiresAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expiresat"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "deviceId",
+          "commandType",
+          "payload",
+          "status",
+          "progress",
+          "result",
+          "routedLinkIds",
+          "linkAcknowledgements",
+          "idempotencyKey",
+          "reasonCode",
+          "reasonMessage",
+          "requiresStateConfirmation",
+          "createdAt",
+          "updatedAt",
+          "expiresAt",
+          "revision"
+        ],
+        "title": "CommandDto"
+      },
+      "CommandRequest": {
+        "properties": {
+          "commandType": {
+            "$ref": "#/components/schemas/CommandType"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          },
+          "idempotencyKey": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 128
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Idempotencykey"
+          }
+        },
+        "type": "object",
+        "required": [
+          "commandType"
+        ],
+        "title": "CommandRequest"
+      },
+      "CommandStatus": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "dispatched",
+          "accepted",
+          "in_progress",
+          "completed",
+          "rejected",
+          "timed_out",
+          "cancelled",
+          "state_unconfirmed"
+        ],
+        "title": "CommandStatus"
+      },
+      "CommandType": {
+        "type": "string",
+        "enum": [
+          "manual_control",
+          "set_mode",
+          "set_armed",
+          "emergency_stop",
+          "return_home",
+          "start_mission",
+          "pause_mission",
+          "resume_mission",
+          "cancel_mission",
+          "read_parameters",
+          "write_parameters",
+          "custom_action"
+        ],
+        "title": "CommandType"
+      },
+      "DeviceCategory": {
+        "type": "string",
+        "enum": [
+          "aerial",
+          "surface",
+          "station",
+          "generic"
+        ],
+        "title": "DeviceCategory"
+      },
+      "DeviceDto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "templateId": {
+            "type": "string",
+            "title": "Templateid"
+          },
+          "displayName": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Displayname"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Description",
+            "default": ""
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 32,
+            "title": "Tags"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "templateId",
+          "displayName",
+          "revision",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "DeviceDto"
+      },
+      "DeviceTemplateDto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "displayName": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Displayname"
+          },
+          "category": {
+            "$ref": "#/components/schemas/DeviceCategory"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Description",
+            "default": ""
+          },
+          "capabilities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Capabilities"
+          },
+          "parameters": {
+            "items": {
+              "$ref": "#/components/schemas/ParameterDefinitionDto"
+            },
+            "type": "array",
+            "title": "Parameters"
+          },
+          "mediaChannels": {
+            "items": {
+              "$ref": "#/components/schemas/MediaChannelDto"
+            },
+            "type": "array",
+            "title": "Mediachannels"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "displayName",
+          "category",
+          "revision",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "DeviceTemplateDto"
+      },
+      "DeviceTemplateWrite": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "displayName": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Displayname"
+          },
+          "category": {
+            "$ref": "#/components/schemas/DeviceCategory"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Description",
+            "default": ""
+          },
+          "capabilities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Capabilities"
+          },
+          "parameters": {
+            "items": {
+              "$ref": "#/components/schemas/ParameterDefinitionDto"
+            },
+            "type": "array",
+            "title": "Parameters"
+          },
+          "mediaChannels": {
+            "items": {
+              "$ref": "#/components/schemas/MediaChannelDto"
+            },
+            "type": "array",
+            "title": "Mediachannels"
+          }
+        },
+        "type": "object",
+        "required": [
+          "displayName",
+          "category"
+        ],
+        "title": "DeviceTemplateWrite"
+      },
+      "DeviceWrite": {
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Id"
+          },
+          "templateId": {
+            "type": "string",
+            "title": "Templateid"
+          },
+          "displayName": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Displayname"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Description",
+            "default": ""
+          },
+          "tags": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "maxItems": 32,
+            "title": "Tags"
+          }
+        },
+        "type": "object",
+        "required": [
+          "templateId",
+          "displayName"
+        ],
+        "title": "DeviceWrite"
+      },
+      "DriverKind": {
+        "type": "string",
+        "enum": [
+          "ros1",
+          "ros2",
+          "serial_json",
+          "simulator"
+        ],
+        "title": "DriverKind"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthDto": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "default": "ok"
+          },
+          "version": {
+            "type": "string",
+            "title": "Version"
+          },
+          "serverInstanceId": {
+            "type": "string",
+            "title": "Serverinstanceid"
+          }
+        },
+        "type": "object",
+        "required": [
+          "version",
+          "serverInstanceId"
+        ],
+        "title": "HealthDto"
+      },
+      "LinkProfileDto": {
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Displayname"
+          },
+          "driver": {
+            "$ref": "#/components/schemas/DriverKind"
+          },
+          "role": {
+            "$ref": "#/components/schemas/LinkRole",
+            "default": "primary"
+          },
+          "priority": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Priority",
+            "default": 100
+          },
+          "config": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Config"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "deviceId": {
+            "type": "string",
+            "title": "Deviceid"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "displayName",
+          "driver",
+          "id",
+          "deviceId",
+          "revision",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "LinkProfileDto"
+      },
+      "LinkProfileWrite": {
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Displayname"
+          },
+          "driver": {
+            "$ref": "#/components/schemas/DriverKind"
+          },
+          "role": {
+            "$ref": "#/components/schemas/LinkRole",
+            "default": "primary"
+          },
+          "priority": {
+            "type": "integer",
+            "maximum": 10000.0,
+            "minimum": 0.0,
+            "title": "Priority",
+            "default": 100
+          },
+          "config": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Config"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "displayName",
+          "driver"
+        ],
+        "title": "LinkProfileWrite"
+      },
+      "LinkRole": {
+        "type": "string",
+        "enum": [
+          "primary",
+          "auxiliary"
+        ],
+        "title": "LinkRole"
+      },
+      "LinkSessionDto": {
+        "properties": {
+          "linkId": {
+            "type": "string",
+            "title": "Linkid"
+          },
+          "deviceId": {
+            "type": "string",
+            "title": "Deviceid"
+          },
+          "driver": {
+            "$ref": "#/components/schemas/DriverKind"
+          },
+          "state": {
+            "$ref": "#/components/schemas/LinkSessionState"
+          },
+          "capabilities": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Capabilities"
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Startedat"
+          },
+          "healthySince": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Healthysince"
+          },
+          "lastHeartbeatAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lastheartbeatat"
+          },
+          "latencyMs": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latencyms"
+          },
+          "packetLossPercent": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Packetlosspercent"
+          },
+          "debugAvailable": {
+            "type": "boolean",
+            "title": "Debugavailable",
+            "default": false
+          },
+          "errorCode": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Errorcode"
+          },
+          "errorMessage": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Errormessage"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "linkId",
+          "deviceId",
+          "driver",
+          "state",
+          "capabilities",
+          "revision"
+        ],
+        "title": "LinkSessionDto"
+      },
+      "LinkSessionState": {
+        "type": "string",
+        "enum": [
+          "stopped",
+          "starting",
+          "handshaking",
+          "healthy",
+          "degraded",
+          "recovering",
+          "failed"
+        ],
+        "title": "LinkSessionState"
+      },
+      "MediaChannelDto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "displayName": {
+            "type": "string",
+            "title": "Displayname"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role",
+            "default": "video"
+          },
+          "required": {
+            "type": "boolean",
+            "title": "Required",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "displayName"
+        ],
+        "title": "MediaChannelDto"
+      },
+      "MissionControlReceipt": {
+        "properties": {
+          "missionRunId": {
+            "type": "string",
+            "title": "Missionrunid"
+          },
+          "commands": {
+            "items": {
+              "$ref": "#/components/schemas/CommandDto"
+            },
+            "type": "array",
+            "title": "Commands"
+          }
+        },
+        "type": "object",
+        "required": [
+          "missionRunId",
+          "commands"
+        ],
+        "title": "MissionControlReceipt"
+      },
+      "MissionPlanDto": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Description",
+            "default": ""
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/MissionStepDto"
+            },
+            "type": "array",
+            "title": "Steps"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "version": {
+            "type": "integer",
+            "title": "Version"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MissionPlanStatus"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "steps",
+          "id",
+          "version",
+          "status",
+          "revision",
+          "createdAt",
+          "updatedAt"
+        ],
+        "title": "MissionPlanDto"
+      },
+      "MissionPlanStatus": {
+        "type": "string",
+        "enum": [
+          "draft",
+          "valid",
+          "archived"
+        ],
+        "title": "MissionPlanStatus"
+      },
+      "MissionPlanWrite": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Name"
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 2000,
+            "title": "Description",
+            "default": ""
+          },
+          "steps": {
+            "items": {
+              "$ref": "#/components/schemas/MissionStepDto"
+            },
+            "type": "array",
+            "title": "Steps"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "steps"
+        ],
+        "title": "MissionPlanWrite"
+      },
+      "MissionRunDto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "missionPlanId": {
+            "type": "string",
+            "title": "Missionplanid"
+          },
+          "missionPlanVersion": {
+            "type": "integer",
+            "title": "Missionplanversion"
+          },
+          "status": {
+            "$ref": "#/components/schemas/MissionRunStatus"
+          },
+          "stepStates": {
+            "additionalProperties": {
+              "type": "string"
+            },
+            "type": "object",
+            "title": "Stepstates"
+          },
+          "planSteps": {
+            "items": {
+              "$ref": "#/components/schemas/MissionStepDto"
+            },
+            "type": "array",
+            "title": "Plansteps"
+          },
+          "startedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Startedat"
+          },
+          "endedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Endedat"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Createdat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "missionPlanId",
+          "missionPlanVersion",
+          "status",
+          "stepStates",
+          "planSteps",
+          "startedAt",
+          "endedAt",
+          "revision",
+          "createdAt"
+        ],
+        "title": "MissionRunDto"
+      },
+      "MissionRunStatus": {
+        "type": "string",
+        "enum": [
+          "queued",
+          "running",
+          "paused",
+          "completed",
+          "failed",
+          "cancelled"
+        ],
+        "title": "MissionRunStatus"
+      },
+      "MissionStepDto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "stepType": {
+            "type": "string",
+            "title": "Steptype"
+          },
+          "deviceId": {
+            "type": "string",
+            "title": "Deviceid"
+          },
+          "dependsOn": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Dependson"
+          },
+          "timeoutSeconds": {
+            "type": "number",
+            "maximum": 86400.0,
+            "exclusiveMinimum": 0.0,
+            "title": "Timeoutseconds",
+            "default": 60.0
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "stepType",
+          "deviceId"
+        ],
+        "title": "MissionStepDto"
+      },
+      "NetworkDiscoveryCandidate": {
+        "properties": {
+          "serviceName": {
+            "type": "string",
+            "title": "Servicename"
+          },
+          "host": {
+            "type": "string",
+            "title": "Host"
+          },
+          "port": {
+            "type": "integer",
+            "title": "Port"
+          },
+          "addresses": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Addresses"
+          },
+          "deviceId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Deviceid"
+          },
+          "schemaVersion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Schemaversion"
+          },
+          "rosVersion": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Rosversion"
+          },
+          "identityVerified": {
+            "type": "boolean",
+            "title": "Identityverified",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "serviceName",
+          "host",
+          "port"
+        ],
+        "title": "NetworkDiscoveryCandidate"
+      },
+      "NetworkDiscoveryResponse": {
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "driver": {
+            "$ref": "#/components/schemas/DriverKind"
+          },
+          "candidates": {
+            "items": {
+              "$ref": "#/components/schemas/NetworkDiscoveryCandidate"
+            },
+            "type": "array",
+            "title": "Candidates"
+          }
+        },
+        "type": "object",
+        "required": [
+          "ok",
+          "driver"
+        ],
+        "title": "NetworkDiscoveryResponse"
+      },
+      "OperationalStateDto": {
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "title": "Deviceid"
+          },
+          "status": {
+            "$ref": "#/components/schemas/OperationalStatus"
+          },
+          "activeLinkId": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Activelinkid"
+          },
+          "healthyLinkIds": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Healthylinkids"
+          },
+          "lastFailoverAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lastfailoverat"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          }
+        },
+        "type": "object",
+        "required": [
+          "deviceId",
+          "status",
+          "activeLinkId",
+          "healthyLinkIds",
+          "lastFailoverAt",
+          "revision"
+        ],
+        "title": "OperationalStateDto"
+      },
+      "OperationalStatus": {
+        "type": "string",
+        "enum": [
+          "offline",
+          "online",
+          "degraded",
+          "failing_over"
+        ],
+        "title": "OperationalStatus"
+      },
+      "ParameterDefinitionDto": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "title": "Key"
+          },
+          "displayName": {
+            "type": "string",
+            "title": "Displayname"
+          },
+          "valueType": {
+            "$ref": "#/components/schemas/ParameterValueType"
+          },
+          "defaultValue": {
+            "title": "Defaultvalue"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          },
+          "minimum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Minimum"
+          },
+          "maximum": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Maximum"
+          },
+          "step": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Step"
+          },
+          "description": {
+            "type": "string",
+            "title": "Description",
+            "default": ""
+          },
+          "enumValues": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Enumvalues"
+          },
+          "readOnly": {
+            "type": "boolean",
+            "title": "Readonly",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "key",
+          "displayName",
+          "valueType",
+          "defaultValue"
+        ],
+        "title": "ParameterDefinitionDto"
+      },
+      "ParameterStateDto": {
+        "properties": {
+          "definition": {
+            "$ref": "#/components/schemas/ParameterDefinitionDto"
+          },
+          "value": {
+            "title": "Value"
+          },
+          "source": {
+            "type": "string",
+            "title": "Source"
+          }
+        },
+        "type": "object",
+        "required": [
+          "definition",
+          "value",
+          "source"
+        ],
+        "title": "ParameterStateDto"
+      },
+      "ParameterValueType": {
+        "type": "string",
+        "enum": [
+          "number",
+          "integer",
+          "boolean",
+          "string",
+          "enum"
+        ],
+        "title": "ParameterValueType"
+      },
+      "ParameterWriteRequest": {
+        "properties": {
+          "values": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Values"
+          }
+        },
+        "type": "object",
+        "required": [
+          "values"
+        ],
+        "title": "ParameterWriteRequest"
+      },
+      "PersistedEventDto": {
+        "properties": {
+          "eventId": {
+            "type": "string",
+            "title": "Eventid"
+          },
+          "eventCursor": {
+            "type": "integer",
+            "title": "Eventcursor"
+          },
+          "aggregateType": {
+            "type": "string",
+            "title": "Aggregatetype"
+          },
+          "aggregateId": {
+            "type": "string",
+            "title": "Aggregateid"
+          },
+          "aggregateRevision": {
+            "type": "integer",
+            "title": "Aggregaterevision"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Occurredat"
+          },
+          "type": {
+            "type": "string",
+            "title": "Type"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Payload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "eventId",
+          "eventCursor",
+          "aggregateType",
+          "aggregateId",
+          "aggregateRevision",
+          "occurredAt",
+          "type",
+          "payload"
+        ],
+        "title": "PersistedEventDto"
+      },
+      "RecordingDto": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "missionRunId": {
+            "type": "string",
+            "title": "Missionrunid"
+          },
+          "fileName": {
+            "type": "string",
+            "title": "Filename"
+          },
+          "status": {
+            "$ref": "#/components/schemas/RecordingStatus"
+          },
+          "sizeBytes": {
+            "type": "integer",
+            "title": "Sizebytes"
+          },
+          "startedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Startedat"
+          },
+          "endedAt": {
+            "anyOf": [
+              {
+                "type": "string",
+                "format": "date-time"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Endedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "missionRunId",
+          "fileName",
+          "status",
+          "sizeBytes",
+          "startedAt",
+          "endedAt"
+        ],
+        "title": "RecordingDto"
+      },
+      "RecordingMessageDto": {
+        "properties": {
+          "topic": {
+            "type": "string",
+            "title": "Topic"
+          },
+          "logTimeNs": {
+            "type": "integer",
+            "title": "Logtimens"
+          },
+          "publishTimeNs": {
+            "type": "integer",
+            "title": "Publishtimens"
+          },
+          "payload": {
+            "title": "Payload"
+          }
+        },
+        "type": "object",
+        "required": [
+          "topic",
+          "logTimeNs",
+          "publishTimeNs",
+          "payload"
+        ],
+        "title": "RecordingMessageDto"
+      },
+      "RecordingStatus": {
+        "type": "string",
+        "enum": [
+          "active",
+          "complete",
+          "interrupted"
+        ],
+        "title": "RecordingStatus"
+      },
+      "RosDebugRequest": {
+        "properties": {
+          "linkId": {
+            "type": "string",
+            "title": "Linkid"
+          },
+          "operation": {
+            "type": "string",
+            "title": "Operation"
+          },
+          "topic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Topic"
+          },
+          "service": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Service"
+          },
+          "action": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Action"
+          },
+          "parameter": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parameter"
+          },
+          "message": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Message"
+          },
+          "arguments": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Arguments"
+          },
+          "throttleMs": {
+            "type": "integer",
+            "maximum": 60000.0,
+            "minimum": 20.0,
+            "title": "Throttlems",
+            "default": 20
+          }
+        },
+        "type": "object",
+        "required": [
+          "linkId",
+          "operation"
+        ],
+        "title": "RosDebugRequest"
+      },
+      "TelemetryQuality": {
+        "type": "string",
+        "enum": [
+          "valid",
+          "stale",
+          "invalid",
+          "unknown",
+          "simulated"
+        ],
+        "title": "TelemetryQuality"
+      },
+      "TelemetrySnapshotDto": {
+        "properties": {
+          "deviceId": {
+            "type": "string",
+            "title": "Deviceid"
+          },
+          "fields": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/TelemetryValueDto"
+            },
+            "type": "object",
+            "title": "Fields"
+          },
+          "revision": {
+            "type": "integer",
+            "title": "Revision"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Updatedat"
+          }
+        },
+        "type": "object",
+        "required": [
+          "deviceId",
+          "fields",
+          "revision",
+          "updatedAt"
+        ],
+        "title": "TelemetrySnapshotDto"
+      },
+      "TelemetryValueDto": {
+        "properties": {
+          "value": {
+            "title": "Value"
+          },
+          "sourceLinkId": {
+            "type": "string",
+            "title": "Sourcelinkid"
+          },
+          "collectedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Collectedat"
+          },
+          "receivedAt": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Receivedat"
+          },
+          "quality": {
+            "$ref": "#/components/schemas/TelemetryQuality"
+          },
+          "unit": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Unit"
+          }
+        },
+        "type": "object",
+        "required": [
+          "value",
+          "sourceLinkId",
+          "collectedAt",
+          "receivedAt",
+          "quality"
+        ],
+        "title": "TelemetryValueDto"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

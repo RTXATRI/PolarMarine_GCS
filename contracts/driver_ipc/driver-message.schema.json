@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polarmarine.local/schemas/v1/driver-message.schema.json",
+  "title": "PolarMarine Core Driver IPC Message",
+  "type": "object",
+  "required": ["schemaVersion", "messageId", "type", "payload"],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "messageId": { "type": "string", "minLength": 1 },
+    "type": { "type": "string", "minLength": 1 },
+    "sentAt": { "type": "string", "format": "date-time" },
+    "correlationId": { "type": ["string", "null"] },
+    "payload": { "type": "object" }
+  }
+}

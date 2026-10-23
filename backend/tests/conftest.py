@@ -1,137 +1,218 @@
-import asyncio
+from __future__ import annotations
+
 from collections.abc import Iterator
-from datetime import datetime, timezone
-import json
 from pathlib import Path
 from typing import Any
 
 import pytest
+from fastapi.testclient import TestClient
 
-from app.core.config import get_settings
-from app.services import rosbridge as rosbridge_module
-from app.services.state import state_service
-
-
-def make_ros_envelope(robot_id: str = "Hexa-UAV", **overrides: Any) -> dict[str, Any]:
-    data: dict[str, Any] = {
-        "sourceConnected": True,
-        "battery": 82,
-        "mode": "手动",
-        "px4Mode": "POSCTL",
-        "missionStatus": "巡航中",
-        "linkStatus": "延迟高",
-        "latencyMs": 999,
-        "packetLoss": 25,
-        "rssi": -90,
-        "lat": 30.2755,
-        "lon": 120.157,
-        "altitude": 12.4,
-        "speed": 0.35,
-        "heading": 86.2,
-        "unlocked": False,
-        "alarm": None,
-    }
-    data.update(overrides)
-    return {
-        "schemaVersion": 1,
-        "robotId": robot_id,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "data": data,
-    }
+from polarmarine_gcs.application.ports.drivers import DriverEventHandler
+from polarmarine_gcs.bootstrap.app import create_app
+from polarmarine_gcs.bootstrap.settings import Settings
+from polarmarine_gcs.domain.links import LinkProfile
 
 
-class FakeRosbridgeSession:
-    def __init__(self, behavior: dict[str, Any] | BaseException | None) -> None:
-        self.behavior = behavior
-        self.connected = False
-        self.close_count = 0
-        self.on_message: Any = None
-        self.on_close: Any = None
-        self.published_bools: list[tuple[str, bool]] = []
-        self.publish_error: BaseException | None = None
-        self.on_publish_bool: Any = None
-
-    async def open(self, on_message: Any, on_close: Any) -> None:
-        self.on_message = on_message
-        self.on_close = on_close
-        if isinstance(self.behavior, BaseException):
-            raise self.behavior
-        self.connected = True
-        if self.behavior is not None:
-            self.emit_raw(self._as_ros_message(self.behavior))
-            await asyncio.sleep(0)
-
-    async def close(self) -> None:
-        self.close_count += 1
-        self.connected = False
-
-    async def publish_bool(self, topic_name: str, value: bool) -> None:
-        if self.publish_error is not None:
-            raise self.publish_error
-        self.published_bools.append((topic_name, bool(value)))
-        if self.on_publish_bool is not None:
-            self.on_publish_bool(topic_name, bool(value))
-        await asyncio.sleep(0)
-
-    def emit_envelope(self, envelope: dict[str, Any]) -> None:
-        self.emit_raw({"data": json.dumps(envelope, ensure_ascii=False)})
-
-    def emit_raw(self, message: dict[str, Any]) -> None:
-        if self.on_message:
-            self.on_message(message)
-
-    def drop(self, reason: str = "pytest connection drop") -> None:
-        self.connected = False
-        if self.on_close:
-            self.on_close(reason)
-
-    @staticmethod
-    def _as_ros_message(value: dict[str, Any]) -> dict[str, Any]:
-        if "schemaVersion" in value:
-            return {"data": json.dumps(value, ensure_ascii=False)}
-        return value
-
-
-class FakeRosbridgeFactory:
+class FakeDriverGateway:
     def __init__(self) -> None:
-        self.behaviors: dict[tuple[str, int], list[dict[str, Any] | BaseException | None]] = {}
-        self.sessions: list[FakeRosbridgeSession] = []
-        self.endpoints: list[tuple[str, int, str, float]] = []
+        self.handler: DriverEventHandler | None = None
+        self.active: dict[str, LinkProfile] = {}
+        self.sent_commands: list[tuple[str, dict[str, Any]]] = []
+        self.debug_requests: list[tuple[str, dict[str, Any]]] = []
+        self.send_failures: set[str] = set()
+        self.fail_starts = False
+        self.auto_ack = True
+        self.started = False
 
-    def configure(self, host: str, port: int, *behaviors: dict[str, Any] | BaseException | None) -> None:
-        self.behaviors[(host, port)] = list(behaviors)
+    def set_event_handler(self, handler: DriverEventHandler) -> None:
+        self.handler = handler
 
-    def __call__(self, host: str, port: int, topic: str, timeout: float) -> FakeRosbridgeSession:
-        queue = self.behaviors.get((host, port))
-        behavior = queue.pop(0) if queue else make_ros_envelope()
-        session = FakeRosbridgeSession(behavior)
-        self.sessions.append(session)
-        self.endpoints.append((host, port, topic, timeout))
-        return session
+    async def start(self) -> None:
+        self.started = True
+
+    async def stop(self) -> None:
+        self.started = False
+        self.active.clear()
+
+    async def start_link(
+        self,
+        profile: LinkProfile,
+        *,
+        expected_device_id: str,
+        requested_capabilities: frozenset[str],
+    ) -> None:
+        assert self.handler
+        if self.fail_starts:
+            raise RuntimeError("driver start failed")
+        self.active[profile.id] = profile
+        await self.handler({"type": "link.handshaking", "payload": {"linkId": profile.id}})
+        await self.handler(
+            {
+                "type": "link.device_info",
+                "payload": {
+                    "linkId": profile.id,
+                    "deviceId": expected_device_id,
+                    "capabilities": sorted(requested_capabilities),
+                },
+            }
+        )
+        await self.heartbeat(profile.id)
+
+    async def stop_link(self, profile: LinkProfile) -> None:
+        self.active.pop(profile.id, None)
+
+    async def send_command(self, profile: LinkProfile, message: dict[str, Any]) -> None:
+        if profile.id in self.send_failures:
+            raise RuntimeError("dispatch failed")
+        self.sent_commands.append((profile.id, message))
+        if not self.auto_ack:
+            return
+        payload = message["payload"]
+        command_id = str(payload["commandId"])
+        command_type = str(payload.get("commandType", ""))
+        arguments = payload.get("arguments")
+        arguments = arguments if isinstance(arguments, dict) else {}
+        result: dict[str, Any] = {}
+        if command_type == "read_parameters":
+            defaults = arguments.get("defaults")
+            result = {"values": defaults if isinstance(defaults, dict) else {}}
+        elif command_type == "write_parameters":
+            values = arguments.get("values")
+            values = values if isinstance(values, dict) else {}
+            result = {
+                "values": values,
+                "parameterResults": {
+                    str(key): {"status": "applied", "value": value} for key, value in values.items()
+                },
+            }
+        await self.ack(profile.id, command_id, "accepted")
+        await self.ack(profile.id, command_id, "completed")
+        await self.ack(
+            profile.id,
+            command_id,
+            "state_confirmed",
+            state_confirmed=True,
+            result=result,
+        )
+
+    async def debug_request(self, driver: str, request: dict[str, Any]) -> dict[str, Any]:
+        self.debug_requests.append((driver, request))
+        if request.get("operation") == "discover":
+            return {"ok": True, "driver": driver, "candidates": []}
+        return {"ok": True, "driver": driver, "request": request}
+
+    async def heartbeat(self, link_id: str) -> None:
+        assert self.handler
+        await self.handler(
+            {
+                "type": "link.heartbeat",
+                "payload": {"linkId": link_id, "latencyMs": 10, "packetLossPercent": 0},
+            }
+        )
+
+    async def fail(self, link_id: str) -> None:
+        assert self.handler
+        await self.handler(
+            {
+                "type": "link.failed",
+                "payload": {"linkId": link_id, "code": "TEST_FAILURE", "message": "test"},
+            }
+        )
+
+    async def telemetry(
+        self,
+        link_id: str,
+        device_id: str,
+        fields: dict[str, Any],
+        sequence: int | None = None,
+    ) -> None:
+        assert self.handler
+        await self.handler(
+            {
+                "type": "telemetry.received",
+                "payload": {
+                    "linkId": link_id,
+                    "deviceId": device_id,
+                    "fields": fields,
+                    "sequence": sequence,
+                },
+            }
+        )
+
+    async def ack(
+        self,
+        link_id: str,
+        command_id: str,
+        status: str,
+        state_confirmed: bool = False,
+        result: dict[str, Any] | None = None,
+        reason_code: str | None = None,
+    ) -> None:
+        assert self.handler
+        await self.handler(
+            {
+                "type": "command.ack",
+                "payload": {
+                    "linkId": link_id,
+                    "commandId": command_id,
+                    "status": status,
+                    "stateConfirmed": state_confirmed,
+                    "result": result,
+                    "reasonCode": reason_code,
+                },
+            }
+        )
 
 
 @pytest.fixture
-def fake_rosbridge_factory() -> FakeRosbridgeFactory:
-    return FakeRosbridgeFactory()
+def fake_driver() -> FakeDriverGateway:
+    return FakeDriverGateway()
 
 
-@pytest.fixture(autouse=True)
-def isolated_backend_runtime(
-    tmp_path: Path,
-    monkeypatch: pytest.MonkeyPatch,
-    fake_rosbridge_factory: FakeRosbridgeFactory,
-) -> Iterator[Path]:
-    """Keep singleton state and persisted profiles isolated for every test."""
+@pytest.fixture
+def settings(tmp_path: Path) -> Settings:
+    return Settings(
+        database_url="sqlite:///:memory:",
+        recordings_dir=tmp_path / "recordings",
+        link_heartbeat_interval_seconds=10.0,
+        link_missed_heartbeats=3,
+        link_failback_stable_seconds=0.01,
+        link_failback_debounce_seconds=0.01,
+        telemetry_stale_seconds=30.0,
+        command_ack_timeout_seconds=0.2,
+        command_state_timeout_seconds=0.2,
+    )
 
-    profile_path = tmp_path / "runtime" / "device_profiles.json"
-    monkeypatch.setenv("DEVICE_PROFILES_PATH", str(profile_path))
-    monkeypatch.setenv("MOCK_SIMULATOR_ENABLED", "false")
-    monkeypatch.setenv("SERIAL_MONITOR_INTERVAL_SEC", "60")
-    monkeypatch.setattr(rosbridge_module, "create_rosbridge_session", fake_rosbridge_factory)
-    get_settings.cache_clear()
-    state_service.reset()
 
-    yield profile_path
+@pytest.fixture
+def client(settings: Settings, fake_driver: FakeDriverGateway) -> Iterator[TestClient]:
+    with TestClient(create_app(settings=settings, drivers=fake_driver)) as test_client:
+        yield test_client
 
-    get_settings.cache_clear()
-    state_service.reset()
+
+def create_connected_link(
+    client: TestClient,
+    *,
+    device_id: str = "Hexa-UAV",
+    driver: str = "simulator",
+    priority: int = 10,
+    role: str = "primary",
+) -> dict[str, Any]:
+    response = client.post(
+        f"/api/v1/devices/{device_id}/links",
+        json={
+            "displayName": f"{driver}-{priority}",
+            "driver": driver,
+            "role": role,
+            "priority": priority,
+            "config": {"seed": priority}
+            if driver == "simulator"
+            else {"host": "127.0.0.1", "port": 9090},
+            "enabled": True,
+        },
+    )
+    assert response.status_code == 201, response.text
+    link = response.json()
+    response = client.post(f"/api/v1/devices/{device_id}/links/{link['id']}/connect")
+    assert response.status_code == 202, response.text
+    return link

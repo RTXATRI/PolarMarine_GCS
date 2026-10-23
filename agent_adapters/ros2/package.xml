@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>polarmarine_ros2_adapter</name>
+  <version>1.0.0</version>
+  <description>PolarMarine GCS ROS2 device protocol adapter.</description>
+  <maintainer email="engineering@polarmarine.local">PolarMarine</maintainer>
+  <license>Proprietary</license>
+  <buildtool_depend>ament_python</buildtool_depend>
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>python3-zeroconf</exec_depend>
+  <export><build_type>ament_python</build_type></export>
+</package>

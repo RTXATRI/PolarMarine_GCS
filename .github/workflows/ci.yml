@@ -1,0 +1,75 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: backend/pyproject.toml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install backend
+        working-directory: backend
+        run: python -m pip install -e ".[drivers,dev]"
+      - name: Install frontend
+        run: npm ci
+      - name: Verify generated API contract
+        shell: pwsh
+        run: |
+          Push-Location backend
+          python tools/export_openapi.py ../contracts/openapi/polarmarine-gcs-v1.json
+          Pop-Location
+          npm run generate:api
+          git diff --exit-code -- contracts/openapi/polarmarine-gcs-v1.json src/shared/api/generated.ts
+      - name: Backend quality
+        working-directory: backend
+        run: |
+          python -m ruff format --check src tests drivers tools alembic ../agent_adapters
+          python -m ruff check src tests drivers tools alembic ../agent_adapters
+          python -m mypy
+          python -m compileall -q src drivers tools alembic ../agent_adapters
+          python -m pytest --cov=polarmarine_gcs.domain --cov=polarmarine_gcs.application --cov-report=term-missing
+      - name: Frontend quality
+        run: npm run check
+      - name: Runtime dependency audit
+        run: npm audit --omit=dev --audit-level=high
+      - name: Install Chromium
+        run: npx playwright install chromium
+      - name: Browser smoke test
+        run: npm run test:e2e
+
+  package:
+    needs: checks
+    runs-on: windows-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Build one-folder release
+        working-directory: backend
+        run: |
+          python -m pip install -e ".[drivers,release]"
+          python -m PyInstaller ../packaging/windows/polarmarine_gcs.spec --noconfirm
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PolarMarine_GCS-windows
+          path: backend/dist/PolarMarine_GCS

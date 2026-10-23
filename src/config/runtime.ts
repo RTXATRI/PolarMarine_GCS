@@ -1,4 +1,0 @@
-export const runtimeConfig = {
-  apiBase: String(import.meta.env.VITE_GCS_API_BASE ?? 'http://127.0.0.1:8000/api').replace(/\/$/, ''),
-  wsUrl: String(import.meta.env.VITE_GCS_WS_URL ?? 'ws://127.0.0.1:8000/ws/telemetry')
-}

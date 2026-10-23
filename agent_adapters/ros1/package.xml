@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>polarmarine_ros1_adapter</name>
+  <version>1.0.0</version>
+  <description>PolarMarine GCS ROS1 device protocol adapter.</description>
+  <maintainer email="engineering@polarmarine.local">PolarMarine</maintainer>
+  <license>Proprietary</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>python3-zeroconf</exec_depend>
+</package>

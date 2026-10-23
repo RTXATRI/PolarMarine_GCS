@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "id": "simulator",
+  "displayName": "Deterministic simulator",
+  "executable": "polarmarine-simulator-driver.exe",
+  "supports": {
+    "formalControl": true,
+    "debugConsole": false,
+    "identityDiscovery": false
+  },
+  "configuration": {
+    "type": "object",
+    "properties": {
+      "seed": { "type": "integer", "default": 1 },
+      "latitude": { "type": "number", "minimum": -90, "maximum": 90 },
+      "longitude": { "type": "number", "minimum": -180, "maximum": 180 },
+      "battery": { "type": "integer", "minimum": 0, "maximum": 100 }
+    }
+  }
+}

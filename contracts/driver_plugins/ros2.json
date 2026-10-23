@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "1.0",
+  "id": "ros2",
+  "displayName": "ROS 2 / rosbridge",
+  "executable": "polarmarine-ros2-driver.exe",
+  "supports": {
+    "formalControl": true,
+    "debugConsole": true,
+    "identityDiscovery": true
+  },
+  "configuration": {
+    "type": "object",
+    "required": ["host"],
+    "properties": {
+      "host": { "type": "string", "minLength": 1 },
+      "port": { "type": "integer", "minimum": 1, "maximum": 65535, "default": 9090 },
+      "secure": { "type": "boolean", "default": false }
+    }
+  }
+}

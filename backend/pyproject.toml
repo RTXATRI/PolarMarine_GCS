@@ -1,0 +1,73 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "polarmarine-gcs"
+version = "1.0.0"
+description = "Local-first multi-agent ground control station"
+requires-python = ">=3.11,<3.12"
+dependencies = [
+  "alembic>=1.14,<2",
+  "fastapi>=0.115,<1",
+  "mcap>=1.2,<2",
+  "pydantic>=2.10,<3",
+  "pydantic-settings>=2.7,<3",
+  "sqlalchemy>=2.0,<3",
+  "uvicorn[standard]>=0.34,<1",
+  "websockets>=14,<17",
+]
+
+[project.optional-dependencies]
+drivers = ["pyserial>=3.5,<4", "zeroconf>=0.147,<1"]
+release = ["pyinstaller>=6.11,<7"]
+dev = [
+  "httpx>=0.28,<1",
+  "hypothesis>=6.120,<7",
+  "mypy>=1.14,<2",
+  "pytest>=8.3,<9",
+  "pytest-asyncio>=0.25,<1",
+  "pytest-cov>=6,<7",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+polarmarine-gcs = "polarmarine_gcs.bootstrap.launcher:main"
+polarmarine-gcs-windows = "polarmarine_gcs.bootstrap.launcher:windows_main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+addopts = "--strict-markers --strict-config"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "tests", "drivers", "tools", "alembic", "../agent_adapters"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC", "C4", "SIM", "RUF"]
+ignore = ["B008"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["polarmarine_gcs"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["polarmarine_gcs"]
+mypy_path = "src"
+plugins = ["pydantic.mypy", "sqlalchemy.ext.mypy.plugin"]
+
+[tool.coverage.run]
+branch = true
+source = ["polarmarine_gcs"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true

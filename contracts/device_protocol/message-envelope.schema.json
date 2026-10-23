@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://polarmarine.local/schemas/v1/message-envelope.schema.json",
+  "title": "PolarMarine Device Message Envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "deviceId",
+    "messageId",
+    "sequence",
+    "sentAt",
+    "type",
+    "correlationId",
+    "payload"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "1.0" },
+    "deviceId": { "type": "string", "minLength": 1, "maxLength": 128 },
+    "messageId": { "type": "string", "format": "uuid" },
+    "sequence": { "type": "integer", "minimum": 0, "maximum": 4294967295 },
+    "sentAt": { "type": "string", "format": "date-time" },
+    "type": {
+      "enum": [
+        "device_info",
+        "heartbeat",
+        "state",
+        "command.request",
+        "command.ack",
+        "mission.event"
+      ]
+    },
+    "correlationId": { "type": ["string", "null"] },
+    "payload": { "type": "object" }
+  }
+}

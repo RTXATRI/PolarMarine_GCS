@@ -1,6 +1,9 @@
 node_modules
 dist
 dist-ssr
+coverage/
+playwright-report/
+test-results/
 *.local
 .env
 .env.*
@@ -41,8 +44,15 @@ pip-wheel-metadata/
 backend/logs/
 backend/runtime/
 backend/tmp/
+backend/build/
+backend/dist/
+backend/*.spec
+soak-result*.json
 
 # ROS / recorded runtime data
 *.bag
 *.bag.active
 *.db3
+
+# Local-only visual reference copied from the legacy UI.
+/PolarMarine_GCS_UI/

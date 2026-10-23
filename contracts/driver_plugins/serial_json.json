@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "1.0",
+  "id": "serial_json",
+  "displayName": "PolarMarine serial JSON",
+  "executable": "polarmarine-serial_json-driver.exe",
+  "supports": {
+    "formalControl": true,
+    "debugConsole": false,
+    "identityDiscovery": false
+  },
+  "configuration": {
+    "type": "object",
+    "required": ["port"],
+    "properties": {
+      "port": { "type": "string", "minLength": 1 },
+      "baudRate": {
+        "enum": [9600, 19200, 38400, 57600, 115200, 230400, 460800, 921600],
+        "default": 115200
+      }
+    }
+  }
+}
